@@ -10,9 +10,14 @@ SECRET_KEY = 'django-insecure-your-secret-key-change-in-production'
 
 DEBUG = True
 
-
-# Erlaube alle Hosts
-ALLOWED_HOSTS = ['*']
+# Dynamically allow localhost and the Codespace hostname when running in GitHub Codespaces.
+codespace_name = os.environ.get('CODESPACE_NAME')
+if codespace_name:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1', f'{codespace_name}-8000.app.github.dev']
+    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.app.github.dev']
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+else:
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

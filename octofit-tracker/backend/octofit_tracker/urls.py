@@ -31,12 +31,12 @@ class APIRootView(APIView):
             'message': 'OctoFit Tracker API',
             'version': '1.0.0',
             'endpoints': {
-                'users': request.build_absolute_uri('/api/users/'),
-                'profiles': request.build_absolute_uri('/api/profiles/'),
-                'teams': request.build_absolute_uri('/api/teams/'),
-                'activities': request.build_absolute_uri('/api/activities/'),
-                'leaderboard': request.build_absolute_uri('/api/leaderboard/'),
-                'workouts': request.build_absolute_uri('/api/workouts/'),
+                'users': build_api_url('users'),
+                'profiles': build_api_url('profiles'),
+                'teams': build_api_url('teams'),
+                'activities': build_api_url('activities'),
+                'leaderboard': build_api_url('leaderboard'),
+                'workouts': build_api_url('workouts'),
             }
         })
 
@@ -49,6 +49,11 @@ if codespace_name:
     base_url = f"https://{codespace_name}-8000.app.github.dev"
 else:
     base_url = "http://localhost:8000"
+
+
+def build_api_url(endpoint):
+    return f"{base_url}/api/{endpoint}/"
+
 
 # URL patterns
 urlpatterns = [
