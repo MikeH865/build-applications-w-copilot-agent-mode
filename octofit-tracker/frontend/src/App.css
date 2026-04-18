@@ -1,0 +1,189 @@
+body {
+  margin: 0;
+  min-height: 100%;
+  background: radial-gradient(circle at top left, #1652f0 0%, #0d1f3c 40%, #071223 100%);
+  color: #e2e8f0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body, #root {
+  min-height: 100%;
+}
+
+.navbar-custom {
+  background: linear-gradient(90deg, rgba(14, 39, 80, 0.98), rgba(18, 53, 110, 0.98));
+}
+
+.navbar-brand,
+.nav-link,
+.brand-subtitle,
+.hero-card p,
+.hero-card h1 {
+  color: #f8fafc;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}
+
+.navbar-brand:hover,
+.nav-link:hover {
+  color: #3b82f6;
+}
+
+.nav-link {
+  color: #dbeafe;
+}
+
+.navbar-dark .navbar-nav .nav-link.active {
+  color: #ffffff;
+}
+
+.octo-logo {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 8px;
+}
+
+.brand-title {
+  font-size: 1rem;
+  letter-spacing: 0.02em;
+}
+
+.brand-subtitle {
+  display: block;
+  font-size: 0.77rem;
+  color: #93c5fd;
+}
+
+main.container {
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.hero-card {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(59, 130, 246, 0.22);
+}
+
+.hero-card h1 {
+  color: #e0f2fe;
+}
+
+.hero-card p,
+.hero-card small {
+  color: #c7d2fe;
+}
+
+.card {
+  border-radius: 1rem;
+  background: rgba(15, 23, 42, 0.94);
+  border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.card-header {
+  background-color: rgba(30, 41, 59, 0.95);
+  border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+.card-footer {
+  background-color: rgba(15, 23, 42, 0.96);
+}
+
+.table {
+  color: #e2e8f0;
+}
+
+.table thead th {
+  border-bottom: 2px solid rgba(148, 163, 184, 0.25);
+  background-color: rgba(30, 41, 59, 0.96);
+  color: #bfdbfe;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(59, 130, 246, 0.14);
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(148, 163, 184, 0.05);
+}
+
+.table-responsive {
+  margin-bottom: 0;
+}
+
+.btn-secondary {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  color: #ffffff;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.btn-outline-primary {
+  color: #93c5fd;
+  border-color: #93c5fd;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: rgba(59, 130, 246, 0.14);
+  color: #dbeafe;
+}
+
+.form-control {
+  background-color: rgba(15, 23, 42, 0.86);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #e2e8f0;
+}
+
+.form-control:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+}
+
+.form-label {
+  color: #cbd5e1;
+}
+
+h1,
+h2,
+h3,
+.h4 {
+  color: #eff6ff;
+}
+
+a,
+.card a {
+  color: #93c5fd;
+}
+
+a:hover,
+.card a:hover {
+  color: #bfdbfe;
+}
+
+.modal-content {
+  border-radius: 0.85rem;
+  background: rgba(15, 23, 42, 0.96);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.modal-body pre {
+  max-height: 40vh;
+  overflow: auto;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  padding: 1rem;
+  color: #e2e8f0;
+}
+
+.text-muted small {
+  color: #94a3b8;
+}
