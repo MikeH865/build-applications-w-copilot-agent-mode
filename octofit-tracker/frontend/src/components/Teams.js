@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const COMPONENT_NAME = 'teams';
-const API_BASE = process.env.REACT_APP_CODESPACE_NAME
-  ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api';
-const endpoint = `${API_BASE}/${COMPONENT_NAME}/`;
+const endpoint = process.env.REACT_APP_CODESPACE_NAME
+  ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/teams/`
+  : 'http://localhost:8000/api/teams/';
 
 function Teams() {
   const [data, setData] = useState([]);

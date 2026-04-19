@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 
-const COMPONENT_NAME = 'leaderboard';
-const API_BASE = process.env.REACT_APP_CODESPACE_NAME
-  ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api`
-  : 'http://localhost:8000/api';
-const endpoint = `${API_BASE}/${COMPONENT_NAME}/`;
+const endpoint = process.env.REACT_APP_CODESPACE_NAME
+  ? `https://${process.env.REACT_APP_CODESPACE_NAME}-8000.app.github.dev/api/leaderboard/`
+  : 'http://localhost:8000/api/leaderboard/';
 
 function Leaderboard() {
   const [data, setData] = useState([]);
