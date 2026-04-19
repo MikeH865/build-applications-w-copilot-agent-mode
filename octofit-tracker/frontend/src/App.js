@@ -11,14 +11,40 @@ const logoSrc = `${process.env.PUBLIC_URL}/octofitapp-small.svg`;
 function Home() {
   return (
     <div className="container py-5">
-      <div className="hero-card p-4 rounded-4 shadow-lg">
-        <h1 className="display-5 text-white mb-3">Welcome to OctoFit Tracker</h1>
-        <p className="lead text-info-light">
-          Track activities, compare leaderboard performance, manage teams, and review workouts from your REST API.
-        </p>
-        <p className="text-muted">
-          Use the navigation menu above to open each section and view live data pulled from your Django backend.
-        </p>
+      <div className="row align-items-center">
+        <div className="col-lg-4 text-center mb-4 mb-lg-0">
+          <img 
+            src={logoSrc} 
+            alt="OctoFit Tracker Logo" 
+            className="home-logo"
+            style={{
+              maxWidth: '300px',
+              width: '100%',
+              filter: 'drop-shadow(0 0 30px rgba(59, 130, 246, 0.4))',
+            }}
+          />
+          <p className="mt-3 text-muted fw-bold">Your Personal Fitness Companion</p>
+        </div>
+        <div className="col-lg-8">
+          <div className="hero-card p-5 rounded-4 shadow-lg">
+            <h1 className="display-5 mb-4">Welcome to OctoFit Tracker</h1>
+            <p className="lead mb-3">
+              Your all-in-one fitness dashboard for tracking activities, monitoring leaderboard performance, managing teams, and reviewing personalized workouts.
+            </p>
+            <hr className="my-4" style={{ borderColor: 'rgba(59, 130, 246, 0.3)' }} />
+            <p className="text-muted mb-4 fs-5">
+              Use the navigation menu above to explore each section and view live data pulled directly from your Django REST API backend in real-time.
+            </p>
+            <div className="d-grid gap-2 d-sm-flex">
+              <NavLink to="/activities" className="btn btn-secondary btn-lg px-5">
+                Get Started
+              </NavLink>
+              <NavLink to="/leaderboard" className="btn btn-outline-primary btn-lg px-5">
+                View Leaderboard
+              </NavLink>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -50,27 +76,27 @@ function App() {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/activities">
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} to="/activities">
                   Activities
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/leaderboard">
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} to="/leaderboard">
                   Leaderboard
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/teams">
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} to="/teams">
                   Teams
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/users">
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} to="/users">
                   Users
                 </NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/workouts">
+                <NavLink className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`} to="/workouts">
                   Workouts
                 </NavLink>
               </li>

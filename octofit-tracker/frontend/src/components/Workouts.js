@@ -52,28 +52,28 @@ function Workouts() {
 
   return (
     <div className="card mb-4 shadow-sm">
-      <div className="card-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3">
+      <div className="card-header d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-3 py-3">
         <div>
-          <h2 className="h4 mb-1">Workouts</h2>
+          <h2 className="h4 mb-2">Workouts</h2>
           <small className="text-muted">
-            REST API endpoint: <code>{endpoint}</code>
+            REST API: <code>{endpoint}</code>
           </small>
         </div>
         <button type="button" className="btn btn-secondary" onClick={fetchData}>
-          Refresh
+          <i className="bi bi-arrow-clockwise"></i> Refresh
         </button>
       </div>
       <div className="card-body">
         <form className="row g-3 mb-4">
-          <div className="col-md-8">
+          <div className="col-12">
             <label htmlFor="workoutsSearch" className="form-label">
-              Search workouts
+              Search Workouts
             </label>
             <input
               id="workoutsSearch"
               type="search"
-              className="form-control"
-              placeholder="Search workouts"
+              className="form-control form-control-lg"
+              placeholder="Filter by any field..."
               value={searchTerm}
               onChange={(event) => setSearchTerm(event.target.value)}
             />
@@ -82,71 +82,102 @@ function Workouts() {
 
         {loading ? (
           <div className="text-center py-5">
-            <div className="spinner-border text-primary" role="status">
+            <div className="spinner-border spinner-border-lg" role="status">
               <span className="visually-hidden">Loading...</span>
             </div>
+            <p className="mt-3 text-muted">Loading workouts...</p>
           </div>
         ) : error ? (
-          <div className="alert alert-danger">{error}</div>
-        ) : (
-          <div className="table-responsive">
-            <table className="table table-striped table-hover table-bordered align-middle mb-0">
-              <thead className="table-light">
-                <tr>
-                  <th scope="col">#</th>
-                  {columns.map((column) => (
-                    <th scope="col" key={column}>{column}</th>
-                  ))}
-                  <th scope="col">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredData.map((item, index) => (
-                  <tr key={item.id || index}>
-                    <th scope="row">{index + 1}</th>
-                    {columns.map((column) => {
-                      const value = item[column];
-                      const displayValue =
-                        value === null || value === undefined
-                          ? ''
-                          : typeof value === 'object'
-                          ? JSON.stringify(value)
-                          : value;
-                      return <td key={column}>{displayValue}</td>;
-                    })}
-                    <td>
-                      <button
-                        type="button"
-                        className="btn btn-sm btn-outline-primary"
-                        data-bs-toggle="modal"
-                        data-bs-target="#workoutsDetailsModal"
-                        onClick={() => openDetails(item)}
-                      >
-                        View
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="alert alert-danger" role="alert">
+            <strong>Error:</strong> {error}
           </div>
+        ) : filteredData.length === 0 ? (
+          <div className="alert alert-info" role="alert">
+            No workouts found. <button type="button" className="btn btn-sm btn-info" onClick={fetchData}>Retry</button>
+          </div>
+        ) : (
+          <>
+            <div className="table-responsive">
+              <table className="table table-striped table-hover table-bordered align-middle">
+                <thead className="table-light">
+                  <tr>
+                    <th scope="col" className="text-center" style={{ width: '50px' }}>#</th>
+                    {columns.map((column) => (
+                      <th scope="col" key={column} className="text-start">
+                        {column.charAt(0).toUpperCase() + column.slice(1)}
+                      </th>
+                    ))}
+                    <th scope="col" className="text-center" style={{ width: '100px' }}>
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredData.map((item, index) => (
+                    <tr key={item.id || index}>
+                      <th scope="row" className="text-center">{index + 1}</th>
+                      {columns.map((column) => {
+                        const value = item[column];
+                        const displayValue =
+                          value === null || value === undefined
+                            ? '-'
+                            : typeof value === 'object'
+                            ? JSON.stringify(value)
+                            : String(value).length > 50 ? String(value).substring(0, 50) + '...' : value;
+                        return <td key={column} className="text-start">{displayValue}</td>;
+                      })}
+                      <td className="text-center">
+                        <button
+                          type="button"
+                          className="btn btn-sm btn-outline-primary"
+                          data-bs-toggle="modal"
+                          data-bs-target="#workoutsDetailsModal"
+                          onClick={() => openDetails(item)}
+                        >
+                          View
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="card-footer text-muted text-center py-3">
+              Showing <strong>{filteredData.length}</strong> of <strong>{data.length}</strong> workouts
+            </div>
+          </>
         )}
       </div>
-      <div className="card-footer text-muted">
-        Showing {filteredData.length} of {data.length} workouts.
-      </div>
 
-      <div className="modal fade" id="workoutsDetailsModal" tabIndex="-1" aria-labelledby="workoutsDetailsModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="workoutsDetailsModal"
+        tabIndex="-1"
+        aria-labelledby="workoutsDetailsModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog modal-lg modal-dialog-scrollable">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="workoutsDetailsModalLabel">
-                Workout details
+                Workout Details
               </h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
+              <button
+                type="button"
+                className="btn-close btn-close-white"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              />
             </div>
             <div className="modal-body">
-              {activeItem ? <pre>{JSON.stringify(activeItem, null, 2)}</pre> : <p>No workout selected.</p>}
+              {activeItem ? (
+                <>
+                  <h6 className="mb-3">Workout Information</h6>
+                  <pre>{JSON.stringify(activeItem, null, 2)}</pre>
+                </>
+              ) : (
+                <p className="text-muted">No workout selected.</p>
+              )}
             </div>
             <div className="modal-footer">
               <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">
