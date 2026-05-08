@@ -10,14 +10,9 @@ SECRET_KEY = 'django-insecure-your-secret-key-change-in-production'
 
 DEBUG = True
 
-# Dynamically allow localhost and the Codespace hostname when running in GitHub Codespaces.
-codespace_name = os.environ.get('CODESPACE_NAME')
-if codespace_name:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1', f'{codespace_name}-8000.app.github.dev']
-    CSRF_TRUSTED_ORIGINS = [f'https://{codespace_name}-8000.app.github.dev']
-    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-else:
-    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+if os.environ.get('CODESPACE_NAME'):
+    ALLOWED_HOSTS.append(f"{os.environ.get('CODESPACE_NAME')}-8000.app.github.dev")
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,7 +24,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'djongo',
-    'octofit_tracker.apps.OctofitTrackerConfig',
 ]
 
 MIDDLEWARE = [
@@ -66,7 +60,7 @@ WSGI_APPLICATION = 'octofit_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'octofit_db',
+        'NAME': 'octofit_tracker',
         'CLIENT': {
             'host': 'localhost',
             'port': 27017,
@@ -113,8 +107,17 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 50,
 }
 
-# CORS Konfiguration: Erlaube alle Ursprünge, Methoden und Header
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOW_HEADERS = ['*']
-CORS_ALLOW_METHODS = ['DELETE', 'GET', 'OPTIONS', 'PATCH', 'POST', 'PUT']
+# CORS Configuration
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',
+    'http://localhost:8000',
+    'http://127.0.0.1:3000',
+    'http://127.0.0.1:8000',
+]
+
+if os.environ.get('CODESPACE_NAME'):
+    codespace_name = os.environ.get('CODESPACE_NAME')
+    CORS_ALLOWED_ORIGINS.extend([
+        f'https://{codespace_name}-3000.app.github.dev',
+        f'https://{codespace_name}-8000.app.github.dev',
+    ])

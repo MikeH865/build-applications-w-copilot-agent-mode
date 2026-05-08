@@ -52,7 +52,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         """Add a member to the team."""
         team = self.get_object()
         user_id = request.data.get('user_id')
-
+        
         try:
             user = User.objects.get(id=user_id)
             team.members.add(user)
@@ -65,7 +65,7 @@ class TeamViewSet(viewsets.ModelViewSet):
         """Remove a member from the team."""
         team = self.get_object()
         user_id = request.data.get('user_id')
-
+        
         try:
             user = User.objects.get(id=user_id)
             team.members.remove(user)
@@ -131,18 +131,18 @@ class LeaderboardViewSet(viewsets.ReadOnlyModelViewSet):
         """Update leaderboard based on user activities."""
         try:
             users = User.objects.all()
-
+            
             for user in users:
                 activities = Activity.objects.filter(user=user)
-
+                
                 total_activities = activities.count()
                 total_duration = activities.aggregate(Sum('duration_minutes'))['duration_minutes__sum'] or 0
                 total_calories = activities.aggregate(Sum('calories_burned'))['calories_burned__sum'] or 0
                 total_distance = activities.aggregate(Sum('distance_km'))['distance_km__sum'] or 0.0
-
+                
                 # Calculate points (simple formula)
                 points = (total_activities * 10) + (total_duration // 10) + (total_calories // 50)
-
+                
                 leaderboard_entry, created = Leaderboard.objects.get_or_create(user=user)
                 leaderboard_entry.total_activities = total_activities
                 leaderboard_entry.total_duration_minutes = total_duration
@@ -150,13 +150,13 @@ class LeaderboardViewSet(viewsets.ReadOnlyModelViewSet):
                 leaderboard_entry.total_distance_km = total_distance
                 leaderboard_entry.points = points
                 leaderboard_entry.save()
-
+            
             # Update ranks
             leaderboard_entries = Leaderboard.objects.order_by('-points')
             for rank, entry in enumerate(leaderboard_entries, 1):
                 entry.rank = rank
                 entry.save()
-
+            
             return Response({'status': 'leaderboard updated'})
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -184,7 +184,7 @@ class WorkoutViewSet(viewsets.ReadOnlyModelViewSet):
         if request.user.is_authenticated:
             # Simple suggestion logic based on user's recent activities
             user_activities = Activity.objects.filter(user=request.user).order_by('-created_at')[:5]
-
+            
             if not user_activities.exists():
                 # Suggest beginner workouts if no activities
                 workouts = Workout.objects.filter(difficulty_level='beginner')
@@ -197,9 +197,9 @@ class WorkoutViewSet(viewsets.ReadOnlyModelViewSet):
                     difficulty = 'intermediate'
                 else:
                     difficulty = 'advanced'
-
+                
                 workouts = Workout.objects.filter(difficulty_level=difficulty)
-
+            
             serializer = self.get_serializer(workouts, many=True)
             return Response(serializer.data)
         return Response({'detail': 'Not authenticated'}, status=status.HTTP_401_UNAUTHORIZED)

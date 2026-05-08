@@ -99,6 +99,7 @@ class LeaderboardSerializer(serializers.ModelSerializer):
 class WorkoutSerializer(serializers.ModelSerializer):
     """Serializer for Workout model."""
 
+    
     class Meta:
         model = Workout
         fields = ['id', 'name', 'description', 'difficulty_level', 'duration_minutes',
