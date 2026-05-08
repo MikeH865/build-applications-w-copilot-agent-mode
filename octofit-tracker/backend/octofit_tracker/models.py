@@ -3,11 +3,14 @@ MongoDB models for OctoFit Tracker app.
 """
 from django.db import models
 from django.contrib.auth.models import User
+
 from bson import ObjectId
 
 
 class UserProfile(models.Model):
     """Extended user profile for OctoFit Tracker."""
+
+    id = djongo_models.ObjectIdField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     bio = models.TextField(blank=True, null=True)
     profile_picture = models.URLField(blank=True, null=True)
@@ -23,6 +26,7 @@ class UserProfile(models.Model):
 
 class Team(models.Model):
     """Team model for group management."""
+    id = djongo_models.ObjectIdField(primary_key=True)
     name = models.CharField(max_length=255)
     description = models.TextField(blank=True, null=True)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='owned_teams')
@@ -39,6 +43,7 @@ class Team(models.Model):
 
 class Activity(models.Model):
     """Activity logging model."""
+    id = djongo_models.ObjectIdField(primary_key=True)
     ACTIVITY_TYPES = [
         ('running', 'Running'),
         ('cycling', 'Cycling'),
@@ -68,6 +73,7 @@ class Activity(models.Model):
 
 class Leaderboard(models.Model):
     """Leaderboard entry model for rankings."""
+    id = djongo_models.ObjectIdField(primary_key=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='leaderboard_entry')
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True, blank=True, related_name='leaderboard')
     total_activities = models.IntegerField(default=0)
@@ -88,6 +94,7 @@ class Leaderboard(models.Model):
 
 class Workout(models.Model):
     """Personalized workout suggestion model."""
+    id = djongo_models.ObjectIdField(primary_key=True)
     DIFFICULTY_LEVELS = [
         ('beginner', 'Beginner'),
         ('intermediate', 'Intermediate'),

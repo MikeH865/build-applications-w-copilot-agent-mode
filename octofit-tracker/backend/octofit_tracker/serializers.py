@@ -98,6 +98,7 @@ class LeaderboardSerializer(serializers.ModelSerializer):
 
 class WorkoutSerializer(serializers.ModelSerializer):
     """Serializer for Workout model."""
+
     
     class Meta:
         model = Workout
